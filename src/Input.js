@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Input = ()=>{
+const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
     const [searchTxt, setSearchTxt]  =useState('');
     
-    const isAlpha = (keyCode)=>{
+    useEffect(()=>{
+        if(searchTxt)
+        getSuggestions(searchTxt)
+    }, [searchTxt])
 
-   
+    const isAlpha = (keyCode)=>{    
     //Small Alphabets
     if(parseInt(keyCode)>=97 && parseInt(keyCode)<=122){return true;}
     //Caps Alphabets
@@ -25,6 +28,7 @@ const Input = ()=>{
                 }
     }
 
+
     const handleKeyEvents = (event)=>{
         const keyCode = parseInt(event.which ? event.which : event.code);
         if(!isAlpha(keyCode) && !isSpecialInput(keyCode)){
@@ -39,7 +43,16 @@ const Input = ()=>{
         }
     }
     
-    return <input value={searchTxt} onKeyDown={handleKeyEvents} />
+    return <>
+        <input value={searchTxt} onKeyDown={handleKeyEvents} />
+        {suggestions?
+            <ul>
+                {suggestions.map((suggestion)=>{
+                    return <li onClick={()=>{setSymbolValue(suggestion)}}>{suggestion}</li>
+                })}
+            </ul>:null
+        }
+    </>
 }
 
 export default Input;
