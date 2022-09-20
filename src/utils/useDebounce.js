@@ -4,13 +4,10 @@ const useDebounce = (func, milliseconds) => {
     let timer = useRef();
 
     return event => {
-        console.log(timer.current)
         if (timer.current) {
             clearTimeout(timer.current)
         }
-
         timer.current = setTimeout(func, time, event);
-        console.log(timer);
     }
 }
 

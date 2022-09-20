@@ -51,7 +51,7 @@ const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
         {suggestions?
             <ul>
                 {suggestions.map((suggestion)=>{
-                    return <li onClick={()=>{setSymbolValue(suggestion)}}>{suggestion.symbol}</li>
+                    return <li key={suggestion.symbolid} onClick={()=>{setSymbolValue(suggestion)}}>{suggestion.symbol}</li>
                 })}
             </ul>:null
         }
