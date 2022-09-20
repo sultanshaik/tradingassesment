@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import useDebounce from "./utils/useDebounce";
 
 const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
     const [searchTxt, setSearchTxt]  =useState('');
+    const delayedCall =  useDebounce(()=>getSuggestions(searchTxt), 200)
     
     useEffect(()=>{
-        if(searchTxt)
-        getSuggestions(searchTxt)
+        if(searchTxt){
+            delayedCall();
+        }
     }, [searchTxt])
 
     const isAlpha = (keyCode)=>{    
@@ -44,7 +47,7 @@ const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
     }
     
     return <>
-        <input value={searchTxt} onKeyDown={handleKeyEvents} />
+        <input value={searchTxt} onKeyDown={handleKeyEvents} type='text' onChange={()=>{}} />
         {suggestions?
             <ul>
                 {suggestions.map((suggestion)=>{
