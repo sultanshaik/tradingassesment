@@ -15,7 +15,9 @@ function App() {
         }
     }, [])
     const getSuggestions = async (searchTxt)=>{
+      
         const apiCall = Promise.resolve(mockData);
+        try{
         const {searchResponse} = await apiCall;
         const suggestionsFilter = searchResponse.filter(ele=>ele.startsWith(searchTxt));
         const suggestionsList = suggestionsFilter.map(suggestion=>{
@@ -28,6 +30,10 @@ function App() {
             }
         })
         setSuggestionList(suggestionsList);
+    }
+    catch(e){
+        console.log("Error");
+    }
     }
 
     return (<div>
