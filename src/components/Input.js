@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useDebounce from "./utils/useDebounce";
+import useDebounce from "../utils/useDebounce";
 
 const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
     const [searchTxt, setSearchTxt]  =useState('');
@@ -51,7 +51,7 @@ const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
         {suggestions?
             <ul>
                 {suggestions.map((suggestion)=>{
-                    return <li onClick={()=>{setSymbolValue(suggestion)}}>{suggestion}</li>
+                    return <li onClick={()=>{setSymbolValue(suggestion)}}>{suggestion.symbol}</li>
                 })}
             </ul>:null
         }
