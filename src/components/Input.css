@@ -1,0 +1,28 @@
+.auto-complete{
+    position: relative;
+    width: 400px;
+}
+.auto-complete .input-symbol{
+    width : 400px;
+}
+
+
+
+.dropdown-menu{
+    position: absolute;
+    background-color: black;
+    color: whitesmoke;
+    top: 100%;
+    left: 0;
+    right: 0;
+    font-size: 13px;
+}
+.dropdown-menu ul{
+    padding: 5px;
+}
+.dropdown-menu li{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}

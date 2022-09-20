@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Input from "./components/Input"
 import Symbol from "./components/Symbol"
 import mockData from './mockdata/mock.json'
@@ -8,8 +8,16 @@ function App() {
     const [suggestionList, setSuggestionList] = useState([]);
     const [symbol, setSymbol] = useState({})
 
-    const getSuggestions = (searchTxt)=>{
-        const suggestionsFilter = mockData.searchResponse.filter(ele=>ele.startsWith(searchTxt));
+    useEffect(()=>{
+        window.addEventListener('click', ()=>{setSuggestionList([])});
+        return ()=>{
+            window.removeEventListener('click', ()=>{setSuggestionList([])});
+        }
+    }, [])
+    const getSuggestions = async (searchTxt)=>{
+        const apiCall = Promise.resolve(mockData);
+        const {searchResponse} = await apiCall;
+        const suggestionsFilter = searchResponse.filter(ele=>ele.startsWith(searchTxt));
         const suggestionsList = suggestionsFilter.map(suggestion=>{
             const suggestionArray = suggestion.split('|');
             return {
