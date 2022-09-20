@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react"
 import Input from "./components/Input"
 import Symbol from "./components/Symbol"
-import mockData from './mockdata/mock.json'
+
+import axios from "axios"
+
+
 
 function App() {
-
-    const [suggestionList, setSuggestionList] = useState([]);
+    const [suggestionList, setSuggestionList] = useState(null);
     const [symbol, setSymbol] = useState({})
 
     useEffect(()=>{
-        window.addEventListener('click', ()=>{setSuggestionList([])});
+        window.addEventListener('click', ()=>{setSuggestionList(null)});
         return ()=>{
-            window.removeEventListener('click', ()=>{setSuggestionList([])});
+            window.removeEventListener('click', ()=>{setSuggestionList(null)});
         }
     }, [])
     const getSuggestions = async (searchTxt)=>{
-      
-        const apiCall = Promise.resolve(mockData);
-        try{
-        const {searchResponse} = await apiCall;
-        const suggestionsFilter = searchResponse.filter(ele=>ele.startsWith(searchTxt));
-        const suggestionsList = suggestionsFilter.map(suggestion=>{
+        if(searchTxt==''){
+            setSuggestionList(null);
+            return;
+        }
+        const {data} = await axios.get(`search/${searchTxt}`);
+        const searchResponse  = data;
+        const suggestionsList = searchResponse.map(suggestion=>{
             const suggestionArray = suggestion.split('|');
             return {
                 'symbol' : suggestionArray[0],
@@ -30,10 +33,6 @@ function App() {
             }
         })
         setSuggestionList(suggestionsList);
-    }
-    catch(e){
-        console.log("Error");
-    }
     }
 
     return (<div>

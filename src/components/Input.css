@@ -5,6 +5,9 @@
 .auto-complete .input-symbol{
     width : 400px;
 }
+.auto-complete .input-field{
+   display: flex;
+}
 
 
 
@@ -16,6 +19,8 @@
     left: 0;
     right: 0;
     font-size: 13px;
+    max-height: 120px;
+    overflow-y: scroll;
 }
 .dropdown-menu ul{
     padding: 5px;

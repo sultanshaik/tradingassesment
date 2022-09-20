@@ -1,14 +1,15 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useDebounce from "../utils/useDebounce";
 
+import CloseIcon from '@mui/icons-material/Close';
+
 const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
+    console.log(suggestions);
     const [searchTxt, setSearchTxt]  =useState('');
     const delayedCall =  useDebounce(()=>getSuggestions(searchTxt), 200)
 
     useEffect(()=>{
-        if(searchTxt){
-            delayedCall();
-        }
+        delayedCall();
     }, [searchTxt])
 
     const isAlpha = (keyCode)=>{    
@@ -45,16 +46,22 @@ const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
             setSearchTxt(currentValue=>currentValue.slice(0,currentValue.length-1))
         }
     }
+    const handleCloseEvent = () =>{
+            setSearchTxt('')
+    }
     
     return <div className="auto-complete">
-        <input className="input-symbol" value={searchTxt} onKeyDown={handleKeyEvents} type='text' onChange={()=>{}} />
-        {suggestions.length?
+        <div className="input-field">
+            <input className="input-symbol" value={searchTxt} onKeyDown={handleKeyEvents} type='search' onChange={()=>{}} />
+            <CloseIcon onClick ={handleCloseEvent} />
+        </div>
+        {suggestions && suggestions.length?
             <div className="dropdown-menu">
             <ul>
                 {suggestions.map((suggestion)=>{
                     return <li key={suggestion.symbolid} onClick={()=>{setSymbolValue(suggestion)}}><span>{suggestion.symbol}</span><span>{suggestion.desc}</span></li>
                 })}
-            </ul></div>:null
+            </ul></div>:(suggestions? <>No results to show</>: null)
             
         }
     </div>
