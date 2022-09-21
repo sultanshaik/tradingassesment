@@ -52,7 +52,7 @@ const Input = ({suggestions, getSuggestions, setSymbolValue})=>{
     
     return <div className="auto-complete">
         <div className="input-field">
-            <input className="input-symbol" value={searchTxt} onKeyDown={handleKeyEvents} type='search' onChange={()=>{}} />
+            <input className="input-symbol" value={searchTxt} onKeyDown={handleKeyEvents} onChange={()=>{}} />
             <CloseIcon onClick ={handleCloseEvent} />
         </div>
         {suggestions && suggestions.length?

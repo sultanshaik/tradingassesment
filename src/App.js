@@ -17,19 +17,19 @@ function App() {
         }
     }, [])
     const getSuggestions = async (searchTxt)=>{
-        if(searchTxt==''){
+        if(searchTxt.trim()===''){
             setSuggestionList(null);
             return;
         }
         const {data} = await axios.get(`search/${searchTxt}`);
         const searchResponse  = data;
         const suggestionsList = searchResponse.map(suggestion=>{
-            const suggestionArray = suggestion.split('|');
+            const [symbol, desc,symbolid ,intrumentType] = suggestion.split('|');
             return {
-                'symbol' : suggestionArray[0],
-                'desc' : suggestionArray[1],
-                'symbolid' : suggestionArray[2],
-                'intrumentType' : suggestionArray[3]
+              symbol,
+              desc,
+              symbolid,
+              intrumentType
             }
         })
         setSuggestionList(suggestionsList);
